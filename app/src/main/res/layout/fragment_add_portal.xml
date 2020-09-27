@@ -44,7 +44,7 @@
 
 
     <Button
-        android:id="@+id/btnAddReminder"
+        android:id="@+id/btnAddPortal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
