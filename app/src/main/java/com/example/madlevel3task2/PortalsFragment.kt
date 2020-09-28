@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_portals.*
 class PortalsFragment : Fragment() {
 
     private val portals = arrayListOf<Portal>()
-    private val portalAdapter = PortalAdapter(portals)
+    private val portalAdapter = PortalAdapter(portals) { portalItem: Portal -> portalItemClicked(portalItem) }
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +45,10 @@ class PortalsFragment : Fragment() {
         )
         observeAddPortalResult()
         createItemTouchHelper().attachToRecyclerView(rvPortals)
+    }
+
+    private fun portalItemClicked(portalItem : Portal) {
+        Toast.makeText(this.context, "Clicked" ,Toast.LENGTH_LONG).show()
     }
 
     private fun observeAddPortalResult() {
