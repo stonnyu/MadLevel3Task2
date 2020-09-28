@@ -11,7 +11,7 @@ class PortalAdapter(private val portals: List<Portal>) : RecyclerView.Adapter<Po
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun databind(portal: Portal) {
-            itemView.tvPortal.text = portal.portalText
+            itemView.tvPortal.text = portal.toString()
         }
     }
 

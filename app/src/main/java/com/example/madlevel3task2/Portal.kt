@@ -23,5 +23,11 @@ data class Portal(var portalText: String?, var portalURL: String?) : Parcelable 
             return Portal(parcel)
         }
     }
+
+    override fun toString(): String {
+        return "$portalText\n\n$portalURL"
+    }
+
+
 }
 

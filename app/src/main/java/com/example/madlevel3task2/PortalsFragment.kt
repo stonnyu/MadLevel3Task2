@@ -1,7 +1,6 @@
 package com.example.madlevel3task2
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -48,28 +47,10 @@ class PortalsFragment : Fragment() {
     }
 
     private fun observeAddPortalResult() {
-//        setFragmentResultListener(REQ_PORTAL_KEY) { key, bundle ->
-//
-//            bundle.getString(REQ_PORTAL_KEY)?.let {
-//                val reminder = Portal("test", "test2")
-//
-//                portals.add(reminder)
-//
-//                portalAdapter.notifyDataSetChanged()
-//            } ?: Log.e("PortalsFragment", "Request triggered, but empty portal text!")
-//
-//        }
-
         setFragmentResultListener(REQ_PORTAL_KEY) { key, bundle ->
-
-            var help = null
-            bundle.getString(BUNDLE_PORTAL_KEY)?.let {
-
-                var portal = bundle.getParcelable<Portal>(REQ_PORTAL_KEY) as Portal
+                var portal = bundle.getParcelable<Portal>(BUNDLE_PORTAL_KEY)
+                portals.add(portal!!)
                 portalAdapter.notifyDataSetChanged()
-            }
-
-
         }
     }
     /**
