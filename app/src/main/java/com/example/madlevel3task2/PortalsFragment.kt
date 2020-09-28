@@ -1,11 +1,16 @@
 package com.example.madlevel3task2
 
+import android.app.PendingIntent
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -18,6 +23,7 @@ import kotlinx.android.synthetic.main.fragment_portals.*
  */
 class PortalsFragment : Fragment() {
 
+    private var customTabHelper: CustomTabHelper = CustomTabHelper()
     private val portals = arrayListOf<Portal>()
     private val portalAdapter = PortalAdapter(portals) { portalItem: Portal -> portalItemClicked(portalItem) }
 
@@ -47,8 +53,27 @@ class PortalsFragment : Fragment() {
         createItemTouchHelper().attachToRecyclerView(rvPortals)
     }
 
-    private fun portalItemClicked(portalItem : Portal) {
-        Toast.makeText(this.context, "Clicked" ,Toast.LENGTH_LONG).show()
+    private fun portalItemClicked(portalItem: Portal) {
+        Toast.makeText(this.context, "Clicked", Toast.LENGTH_LONG).show()
+
+        val builder = CustomTabsIntent.Builder()
+        builder.setToolbarColor(ContextCompat.getColor(this.requireContext(), R.color.colorPrimary))
+        builder.addDefaultShareMenuItem()
+        builder.setShowTitle(true)
+        builder.setExitAnimations(
+            this.requireContext(),
+            android.R.anim.fade_in,
+            android.R.anim.fade_out
+        )
+
+        val customTabsIntent = builder.build()
+
+        val packageName = customTabHelper.getPackageNameToUse(this, "https://youtube.com")
+        if (packageName == null)
+        else {
+            customTabsIntent.intent.setPackage(packageName)
+            customTabsIntent.launchUrl(this.requireContext(), Uri.parse(portalItem.portalURL!!))
+        }
     }
 
     private fun observeAddPortalResult() {
